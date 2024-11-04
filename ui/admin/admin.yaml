@@ -1,0 +1,644 @@
+about:
+  date: November 04, 2024 07:44:17
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+info:
+  number_relationships: 27
+  number_tables: 24
+info_toggle_checked: true
+resources:
+  Achievement:
+    attributes:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+    - name: description
+    - name: id
+    description: Describes achievements that can be unlocked by players.
+    info_list: Describes achievements that can be unlocked by players.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - achievement_id
+      name: PlayerAchievementList
+      resource: PlayerAchievement
+    type: Achievement
+    user_key: name
+  Ban:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: player_id
+    - name: start_date
+      type: DATETIME
+    - name: end_date
+      type: DATETIME
+    description: Contains ban records imposed on players.
+    info_list: Contains ban records imposed on players.
+    tab_groups:
+    - direction: toone
+      fks:
+      - player_id
+      name: player
+      resource: Player
+    type: Ban
+    user_key: id
+  BugReport:
+    attributes:
+    - label: ' description*'
+      name: description
+      search: true
+      sort: true
+    - name: player_id
+    - name: id
+    description: Stores bug reports submitted by players.
+    info_list: Stores bug reports submitted by players.
+    tab_groups:
+    - direction: toone
+      fks:
+      - player_id
+      name: player
+      resource: Player
+    type: BugReport
+    user_key: description
+  Chat:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: game_id
+    - name: player_id
+    - name: message
+    - name: timestamp
+      type: DATETIME
+    description: Contains chat messages exchanged during a game.
+    info_list: Contains chat messages exchanged during a game.
+    tab_groups:
+    - direction: toone
+      fks:
+      - game_id
+      name: game
+      resource: Game
+    - direction: toone
+      fks:
+      - player_id
+      name: player
+      resource: Player
+    type: Chat
+    user_key: id
+  ChessBoard:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: game_id
+    - name: board_state
+    description: Represents the initial state and setup of a chess game board.
+    info_list: Represents the initial state and setup of a chess game board.
+    tab_groups:
+    - direction: toone
+      fks:
+      - game_id
+      name: game
+      resource: Game
+    type: ChessBoard
+    user_key: id
+  ChessClub:
+    attributes:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+    - name: location
+    - name: id
+    description: Represents chess clubs players can join.
+    info_list: Represents chess clubs players can join.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - club_id
+      name: ClubMembershipList
+      resource: ClubMembership
+    type: ChessClub
+    user_key: name
+  ClubMembership:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: club_id
+    - name: player_id
+    description: Connects players with the chess clubs they are part of.
+    info_list: Connects players with the chess clubs they are part of.
+    tab_groups:
+    - direction: toone
+      fks:
+      - club_id
+      name: club
+      resource: ChessClub
+    - direction: toone
+      fks:
+      - player_id
+      name: player
+      resource: Player
+    type: ClubMembership
+    user_key: id
+  EloRating:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: player_id
+    - name: rating
+    description: Tracks the Elo ratings of players.
+    info_list: Tracks the Elo ratings of players.
+    tab_groups:
+    - direction: toone
+      fks:
+      - player_id
+      name: player
+      resource: Player
+    type: EloRating
+    user_key: id
+  Friend:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: friend_id
+    - name: player_id
+    description: Represents friend relations between players.
+    info_list: Represents friend relations between players.
+    tab_groups:
+    - direction: toone
+      fks:
+      - friend_id
+      name: friend
+      resource: Player
+    - direction: toone
+      fks:
+      - player_id
+      name: player
+      resource: Player
+    type: Friend
+    user_key: id
+  Game:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: start_time
+      type: DATETIME
+    - name: is_completed
+    description: Stores information about a chess game.
+    info_list: Stores information about a chess game.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - game_id
+      name: ChatList
+      resource: Chat
+    - direction: tomany
+      fks:
+      - game_id
+      name: ChessBoardList
+      resource: ChessBoard
+    - direction: tomany
+      fks:
+      - game_id
+      name: GameResultList
+      resource: GameResult
+    - direction: tomany
+      fks:
+      - game_id
+      name: MoveList
+      resource: Move
+    type: Game
+    user_key: id
+  GameResult:
+    attributes:
+    - label: ' result_description*'
+      name: result_description
+      search: true
+      sort: true
+    - name: game_id
+    - name: winner_id
+    - name: id
+    description: Stores the results of completed games.
+    info_list: Stores the results of completed games.
+    tab_groups:
+    - direction: toone
+      fks:
+      - game_id
+      name: game
+      resource: Game
+    - direction: toone
+      fks:
+      - winner_id
+      name: winner
+      resource: Player
+    type: GameResult
+    user_key: result_description
+  Leaderboard:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: player_id
+    - name: score
+    description: Records the leaderboard standings of players.
+    info_list: Records the leaderboard standings of players.
+    tab_groups:
+    - direction: toone
+      fks:
+      - player_id
+      name: player
+      resource: Player
+    type: Leaderboard
+    user_key: id
+  Moderator:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: player_id
+    - name: permissions
+    description: Defines moderators who oversee and manage games and tournaments.
+    info_list: Defines moderators who oversee and manage games and tournaments.
+    tab_groups:
+    - direction: toone
+      fks:
+      - player_id
+      name: player
+      resource: Player
+    type: Moderator
+    user_key: id
+  Move:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: game_id
+    - name: player_id
+    - name: move_notation
+    - name: timestamp
+      type: DATETIME
+    description: Records each move made by players during a game.
+    info_list: Records each move made by players during a game.
+    tab_groups:
+    - direction: toone
+      fks:
+      - game_id
+      name: game
+      resource: Game
+    - direction: toone
+      fks:
+      - player_id
+      name: player
+      resource: Player
+    type: Move
+    user_key: id
+  Notification:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: player_id
+    - name: message
+    - name: is_read
+    description: Stores notifications sent to players related to game events.
+    info_list: Stores notifications sent to players related to game events.
+    tab_groups:
+    - direction: toone
+      fks:
+      - player_id
+      name: player
+      resource: Player
+    type: Notification
+    user_key: id
+  Payment:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: player_id
+    - name: amount
+    - name: payment_date
+      type: DATETIME
+    description: Records payments and subscriptions made by players.
+    info_list: Records payments and subscriptions made by players.
+    tab_groups:
+    - direction: toone
+      fks:
+      - player_id
+      name: player
+      resource: Player
+    type: Payment
+    user_key: id
+  Player:
+    attributes:
+    - label: ' username*'
+      name: username
+      search: true
+      sort: true
+    - name: email
+    - name: id
+    description: Represents a player participating in the chess platform.
+    info_list: Represents a player participating in the chess platform.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - player_id
+      name: BanList
+      resource: Ban
+    - direction: tomany
+      fks:
+      - player_id
+      name: BugReportList
+      resource: BugReport
+    - direction: tomany
+      fks:
+      - player_id
+      name: ChatList
+      resource: Chat
+    - direction: tomany
+      fks:
+      - player_id
+      name: ClubMembershipList
+      resource: ClubMembership
+    - direction: tomany
+      fks:
+      - player_id
+      name: EloRatingList
+      resource: EloRating
+    - direction: tomany
+      fks:
+      - friend_id
+      name: FriendList
+      resource: Friend
+    - direction: tomany
+      fks:
+      - player_id
+      name: FriendList
+      resource: Friend
+    - direction: tomany
+      fks:
+      - winner_id
+      name: GameResultList
+      resource: GameResult
+    - direction: tomany
+      fks:
+      - player_id
+      name: LeaderboardList
+      resource: Leaderboard
+    - direction: tomany
+      fks:
+      - player_id
+      name: ModeratorList
+      resource: Moderator
+    - direction: tomany
+      fks:
+      - player_id
+      name: MoveList
+      resource: Move
+    - direction: tomany
+      fks:
+      - player_id
+      name: NotificationList
+      resource: Notification
+    - direction: tomany
+      fks:
+      - player_id
+      name: PaymentList
+      resource: Payment
+    - direction: tomany
+      fks:
+      - player_id
+      name: PlayerAchievementList
+      resource: PlayerAchievement
+    - direction: tomany
+      fks:
+      - player_id
+      name: PlayerTeamList
+      resource: PlayerTeam
+    - direction: tomany
+      fks:
+      - player_id
+      name: PlayerTournamentList
+      resource: PlayerTournament
+    - direction: tomany
+      fks:
+      - reported_by_id
+      name: ReportList
+      resource: Report
+    - direction: tomany
+      fks:
+      - reported_player_id
+      name: reportedReportList
+      resource: Report
+    - direction: tomany
+      fks:
+      - player_id
+      name: RuleViolationList
+      resource: RuleViolation
+    type: Player
+    user_key: username
+  PlayerAchievement:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: achievement_id
+    - name: player_id
+    description: Connects players with their unlocked achievements.
+    info_list: Connects players with their unlocked achievements.
+    tab_groups:
+    - direction: toone
+      fks:
+      - achievement_id
+      name: achievement
+      resource: Achievement
+    - direction: toone
+      fks:
+      - player_id
+      name: player
+      resource: Player
+    type: PlayerAchievement
+    user_key: id
+  PlayerTeam:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: player_id
+    - name: team_id
+    description: Connects players with teams they are part of within team games.
+    info_list: Connects players with teams they are part of within team games.
+    tab_groups:
+    - direction: toone
+      fks:
+      - player_id
+      name: player
+      resource: Player
+    - direction: toone
+      fks:
+      - team_id
+      name: team
+      resource: Team
+    type: PlayerTeam
+    user_key: id
+  PlayerTournament:
+    attributes:
+    - label: ' tournament_id*'
+      name: tournament_id
+      search: true
+      sort: true
+    - name: player_id
+    - name: tournament_id
+    - name: id
+    description: Connects players with tournaments they participate in.
+    info_list: Connects players with tournaments they participate in.
+    tab_groups:
+    - direction: toone
+      fks:
+      - player_id
+      name: player
+      resource: Player
+    - direction: toone
+      fks:
+      - tournament_id
+      name: tournament
+      resource: Tournament
+    type: PlayerTournament
+    user_key: tournament_id
+  Report:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: reported_by_id
+    - name: reported_player_id
+    - name: reason
+    description: Represents reports made by players about other players.
+    info_list: Represents reports made by players about other players.
+    tab_groups:
+    - direction: toone
+      fks:
+      - reported_by_id
+      name: reported_by
+      resource: Player
+    - direction: toone
+      fks:
+      - reported_player_id
+      name: reported_player
+      resource: Player
+    type: Report
+    user_key: id
+  RuleViolation:
+    attributes:
+    - label: ' description*'
+      name: description
+      search: true
+      sort: true
+    - name: player_id
+    - name: id
+    - name: date_reported
+      type: DATETIME
+    description: Describes instances where players have violated platform rules.
+    info_list: Describes instances where players have violated platform rules.
+    tab_groups:
+    - direction: toone
+      fks:
+      - player_id
+      name: player
+      resource: Player
+    type: RuleViolation
+    user_key: description
+  Team:
+    attributes:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+    - name: id
+    description: Represents teams in collaborative chess games.
+    info_list: Represents teams in collaborative chess games.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - team_id
+      name: PlayerTeamList
+      resource: PlayerTeam
+    type: Team
+    user_key: name
+  Tournament:
+    attributes:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+    - name: start_date
+      type: DATETIME
+    - name: end_date
+      type: DATETIME
+    - name: id
+    description: Information regarding chess tournaments.
+    info_list: Information regarding chess tournaments.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - tournament_id
+      name: PlayerTournamentList
+      resource: PlayerTournament
+    type: Tournament
+    user_key: name
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    detail_mode: tab
+    edit_on_mode: dblclick
+    exclude_listpicker: false
+    include_translation: 'false'
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    new_mode: dialog
+    pick_style: list
+    row_height: small,
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: 'false'

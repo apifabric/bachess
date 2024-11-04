@@ -1,0 +1,51 @@
+<o-form-layout-manager attr="GameResult" mode="tab" title="GAMERESULT">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="GameResultTable" 
+            service="GameResult" 
+            entity="GameResult" 
+            title="GAMERESULT"
+            keys="id"
+            columns="result_description;game_id;winner_id;id" 
+            header-actions="R;D"
+            visible-columns="result_description;game_id;winner_id;id"  
+            sort-columns="result_description" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #result_description attr="result_description" title=" result_description*" editable="no" required="no" content-align="left"></o-table-column>
+            
+            <o-table-column attr="game_id" title="game_id">
+    <o-table-cell-renderer-service attr="game_id" 
+        service="Game" entity="GameType" columns="id;id"
+        parent-keys="id:game_id"
+        value-column="id" keys="game_id"
+        visible-columns="id" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column attr="winner_id" title="winner_id">
+    <o-table-cell-renderer-service attr="winner_id" 
+        service="Player" entity="PlayerType" columns="id;username"
+        parent-keys="id:winner_id"
+        value-column="username" keys="winner_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column #id attr="id" title="id" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

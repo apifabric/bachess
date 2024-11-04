@@ -1,0 +1,217 @@
+// Copy this text, paste to https://dbdiagram.io/d
+// Or, https://databasediagram.com/app
+// Or, view in VSCode with extension: "DBML Live Preview"
+
+Project DBML {
+  Note: '''
+Achievement: Describes achievements that can be unlocked by players.
+Ban: Contains ban records imposed on players.
+Player: Represents a player participating in the chess platform.
+BugReport: Stores bug reports submitted by players.
+Chat: Contains chat messages exchanged during a game.
+Game: Stores information about a chess game.
+ChessBoard: Represents the initial state and setup of a chess game board.
+ChessClub: Represents chess clubs players can join.
+ClubMembership: Connects players with the chess clubs they are part of.
+EloRating: Tracks the Elo ratings of players.
+Friend: Represents friend relations between players.
+GameResult: Stores the results of completed games.
+Leaderboard: Records the leaderboard standings of players.
+Moderator: Defines moderators who oversee and manage games and tournaments.
+Move: Records each move made by players during a game.
+Notification: Stores notifications sent to players related to game events.
+Payment: Records payments and subscriptions made by players.
+PlayerAchievement: Connects players with their unlocked achievements.
+PlayerTeam: Connects players with teams they are part of within team games.
+Team: Represents teams in collaborative chess games.
+PlayerTournament: Connects players with tournaments they participate in.
+Tournament: Information regarding chess tournaments.
+Report: Represents reports made by players about other players.
+RuleViolation: Describes instances where players have violated platform rules.
+'''
+}
+
+Table Achievement {
+    id INTEGER [primary key]
+    name VARCHAR 
+    description VARCHAR 
+    }
+
+Table Ban {
+    id INTEGER [primary key]
+    player_id INTEGER 
+    start_date DATETIME 
+    end_date DATETIME 
+    }
+
+Table Player {
+    id INTEGER [primary key]
+    username VARCHAR 
+    email VARCHAR 
+    }
+
+Table BugReport {
+    id INTEGER [primary key]
+    player_id INTEGER 
+    description VARCHAR 
+    }
+
+Table Chat {
+    id INTEGER [primary key]
+    game_id INTEGER 
+    player_id INTEGER 
+    message VARCHAR 
+    timestamp DATETIME 
+    }
+
+Table Game {
+    id INTEGER [primary key]
+    start_time DATETIME 
+    is_completed BOOLEAN 
+    }
+
+Table ChessBoard {
+    id INTEGER [primary key]
+    game_id INTEGER 
+    board_state VARCHAR 
+    }
+
+Table ChessClub {
+    id INTEGER [primary key]
+    name VARCHAR 
+    location VARCHAR 
+    }
+
+Table ClubMembership {
+    id INTEGER [primary key]
+    player_id INTEGER 
+    club_id INTEGER 
+    }
+
+Table EloRating {
+    id INTEGER [primary key]
+    player_id INTEGER 
+    rating INTEGER 
+    }
+
+Table Friend {
+    id INTEGER [primary key]
+    player_id INTEGER 
+    friend_id INTEGER 
+    }
+
+Table GameResult {
+    id INTEGER [primary key]
+    game_id INTEGER 
+    winner_id INTEGER 
+    result_description VARCHAR 
+    }
+
+Table Leaderboard {
+    id INTEGER [primary key]
+    player_id INTEGER 
+    score INTEGER 
+    }
+
+Table Moderator {
+    id INTEGER [primary key]
+    player_id INTEGER 
+    permissions VARCHAR 
+    }
+
+Table Move {
+    id INTEGER [primary key]
+    game_id INTEGER 
+    player_id INTEGER 
+    move_notation VARCHAR 
+    timestamp DATETIME 
+    }
+
+Table Notification {
+    id INTEGER [primary key]
+    player_id INTEGER 
+    message VARCHAR 
+    is_read BOOLEAN 
+    }
+
+Table Payment {
+    id INTEGER [primary key]
+    player_id INTEGER 
+    amount INTEGER 
+    payment_date DATETIME 
+    }
+
+Table PlayerAchievement {
+    id INTEGER [primary key]
+    player_id INTEGER 
+    achievement_id INTEGER 
+    }
+
+Table PlayerTeam {
+    id INTEGER [primary key]
+    player_id INTEGER 
+    team_id INTEGER 
+    }
+
+Table Team {
+    id INTEGER [primary key]
+    name VARCHAR 
+    }
+
+Table PlayerTournament {
+    id INTEGER [primary key]
+    player_id INTEGER 
+    tournament_id INTEGER 
+    }
+
+Table Tournament {
+    id INTEGER [primary key]
+    name VARCHAR 
+    start_date DATETIME 
+    end_date DATETIME 
+    }
+
+Table Report {
+    id INTEGER [primary key]
+    reported_by_id INTEGER 
+    reported_player_id INTEGER 
+    reason VARCHAR 
+    }
+
+Table RuleViolation {
+    id INTEGER [primary key]
+    player_id INTEGER 
+    description VARCHAR 
+    date_reported DATETIME 
+    }
+
+
+
+// Relationships
+    Ref: Ban.(player_id) < Player.(id)
+    Ref: BugReport.(player_id) < Player.(id)
+    Ref: Chat.(game_id) < Game.(id)
+    Ref: Chat.(player_id) < Player.(id)
+    Ref: ChessBoard.(game_id) < Game.(id)
+    Ref: ClubMembership.(club_id) < ChessClub.(id)
+    Ref: ClubMembership.(player_id) < Player.(id)
+    Ref: EloRating.(player_id) < Player.(id)
+    Ref: Friend.(friend_id) < Player.(id)
+    Ref: Friend.(player_id) < Player.(id)
+    Ref: GameResult.(game_id) < Game.(id)
+    Ref: GameResult.(winner_id) < Player.(id)
+    Ref: Leaderboard.(player_id) < Player.(id)
+    Ref: Moderator.(player_id) < Player.(id)
+    Ref: Move.(game_id) < Game.(id)
+    Ref: Move.(player_id) < Player.(id)
+    Ref: Notification.(player_id) < Player.(id)
+    Ref: Payment.(player_id) < Player.(id)
+    Ref: PlayerAchievement.(achievement_id) < Achievement.(id)
+    Ref: PlayerAchievement.(player_id) < Player.(id)
+    Ref: PlayerTeam.(player_id) < Player.(id)
+    Ref: PlayerTeam.(team_id) < Team.(id)
+    Ref: PlayerTournament.(player_id) < Player.(id)
+    Ref: PlayerTournament.(tournament_id) < Tournament.(id)
+    Ref: Report.(reported_by_id) < Player.(id)
+    Ref: Report.(reported_player_id) < Player.(id)
+    Ref: RuleViolation.(player_id) < Player.(id)

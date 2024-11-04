@@ -1,0 +1,978 @@
+about:
+  date: November 04, 2024 07:44:17
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+entities:
+  Achievement:
+    columns:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: description
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Describes achievements that can be unlocked by players.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Describes achievements that can be unlocked by players.
+    label: Achievement
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - achievement_id
+      name: PlayerAchievementList
+      resource: PlayerAchievement
+    type: Achievement
+  Ban:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: player_id
+      template: integer
+      type: INTEGER
+    - name: start_date
+      type: DATETIME
+    - name: end_date
+      type: DATETIME
+    description: Contains ban records imposed on players.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Contains ban records imposed on players.
+    label: Ban
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - player_id
+      name: player
+      resource: Player
+    type: Ban
+  BugReport:
+    columns:
+    - label: ' description*'
+      name: description
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: player_id
+      template: integer
+      type: INTEGER
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Stores bug reports submitted by players.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: description
+    home_template: home_template.html
+    info_list: Stores bug reports submitted by players.
+    label: BugReport
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - player_id
+      name: player
+      resource: Player
+    type: BugReport
+  Chat:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: game_id
+      template: integer
+      type: INTEGER
+    - name: player_id
+      template: integer
+      type: INTEGER
+    - name: message
+      template: text
+      type: VARCHAR
+    - name: timestamp
+      type: DATETIME
+    description: Contains chat messages exchanged during a game.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Contains chat messages exchanged during a game.
+    label: Chat
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - game_id
+      name: game
+      resource: Game
+    - direction: toone
+      fks:
+      - player_id
+      name: player
+      resource: Player
+    type: Chat
+  ChessBoard:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: game_id
+      template: integer
+      type: INTEGER
+    - name: board_state
+      template: text
+      type: VARCHAR
+    description: Represents the initial state and setup of a chess game board.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Represents the initial state and setup of a chess game board.
+    label: ChessBoard
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - game_id
+      name: game
+      resource: Game
+    type: ChessBoard
+  ChessClub:
+    columns:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: location
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents chess clubs players can join.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Represents chess clubs players can join.
+    label: ChessClub
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - club_id
+      name: ClubMembershipList
+      resource: ClubMembership
+    type: ChessClub
+  ClubMembership:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: club_id
+      template: integer
+      type: INTEGER
+    - name: player_id
+      template: integer
+      type: INTEGER
+    description: Connects players with the chess clubs they are part of.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Connects players with the chess clubs they are part of.
+    label: ClubMembership
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - club_id
+      name: club
+      resource: ChessClub
+    - direction: toone
+      fks:
+      - player_id
+      name: player
+      resource: Player
+    type: ClubMembership
+  EloRating:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: player_id
+      template: integer
+      type: INTEGER
+    - name: rating
+      template: integer
+      type: INTEGER
+    description: Tracks the Elo ratings of players.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Tracks the Elo ratings of players.
+    label: EloRating
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - player_id
+      name: player
+      resource: Player
+    type: EloRating
+  Friend:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: friend_id
+      template: integer
+      type: INTEGER
+    - name: player_id
+      template: integer
+      type: INTEGER
+    description: Represents friend relations between players.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Represents friend relations between players.
+    label: Friend
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - friend_id
+      name: friend
+      resource: Player
+    - direction: toone
+      fks:
+      - player_id
+      name: player
+      resource: Player
+    type: Friend
+  Game:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: start_time
+      type: DATETIME
+    - name: is_completed
+      template: text
+      type: BOOLEAN
+    description: Stores information about a chess game.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Stores information about a chess game.
+    label: Game
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - game_id
+      name: ChatList
+      resource: Chat
+    - direction: tomany
+      fks:
+      - game_id
+      name: ChessBoardList
+      resource: ChessBoard
+    - direction: tomany
+      fks:
+      - game_id
+      name: GameResultList
+      resource: GameResult
+    - direction: tomany
+      fks:
+      - game_id
+      name: MoveList
+      resource: Move
+    type: Game
+  GameResult:
+    columns:
+    - label: ' result_description*'
+      name: result_description
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: game_id
+      template: integer
+      type: INTEGER
+    - name: winner_id
+      template: integer
+      type: INTEGER
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Stores the results of completed games.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: result_description
+    home_template: home_template.html
+    info_list: Stores the results of completed games.
+    label: GameResult
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - game_id
+      name: game
+      resource: Game
+    - direction: toone
+      fks:
+      - winner_id
+      name: winner
+      resource: Player
+    type: GameResult
+  Leaderboard:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: player_id
+      template: integer
+      type: INTEGER
+    - name: score
+      template: integer
+      type: INTEGER
+    description: Records the leaderboard standings of players.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Records the leaderboard standings of players.
+    label: Leaderboard
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - player_id
+      name: player
+      resource: Player
+    type: Leaderboard
+  Moderator:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: player_id
+      template: integer
+      type: INTEGER
+    - name: permissions
+      template: text
+      type: VARCHAR
+    description: Defines moderators who oversee and manage games and tournaments.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Defines moderators who oversee and manage games and tournaments.
+    label: Moderator
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - player_id
+      name: player
+      resource: Player
+    type: Moderator
+  Move:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: game_id
+      template: integer
+      type: INTEGER
+    - name: player_id
+      template: integer
+      type: INTEGER
+    - name: move_notation
+      template: text
+      type: VARCHAR
+    - name: timestamp
+      type: DATETIME
+    description: Records each move made by players during a game.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Records each move made by players during a game.
+    label: Move
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - game_id
+      name: game
+      resource: Game
+    - direction: toone
+      fks:
+      - player_id
+      name: player
+      resource: Player
+    type: Move
+  Notification:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: player_id
+      template: integer
+      type: INTEGER
+    - name: message
+      template: text
+      type: VARCHAR
+    - name: is_read
+      template: text
+      type: BOOLEAN
+    description: Stores notifications sent to players related to game events.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Stores notifications sent to players related to game events.
+    label: Notification
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - player_id
+      name: player
+      resource: Player
+    type: Notification
+  Payment:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: player_id
+      template: integer
+      type: INTEGER
+    - name: amount
+      template: integer
+      type: INTEGER
+    - name: payment_date
+      type: DATETIME
+    description: Records payments and subscriptions made by players.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Records payments and subscriptions made by players.
+    label: Payment
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - player_id
+      name: player
+      resource: Player
+    type: Payment
+  Player:
+    columns:
+    - label: ' username*'
+      name: username
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: email
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents a player participating in the chess platform.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: username
+    home_template: home_template.html
+    info_list: Represents a player participating in the chess platform.
+    label: Player
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - player_id
+      name: BanList
+      resource: Ban
+    - direction: tomany
+      fks:
+      - player_id
+      name: BugReportList
+      resource: BugReport
+    - direction: tomany
+      fks:
+      - player_id
+      name: ChatList
+      resource: Chat
+    - direction: tomany
+      fks:
+      - player_id
+      name: ClubMembershipList
+      resource: ClubMembership
+    - direction: tomany
+      fks:
+      - player_id
+      name: EloRatingList
+      resource: EloRating
+    - direction: tomany
+      fks:
+      - friend_id
+      name: FriendList
+      resource: Friend
+    - direction: tomany
+      fks:
+      - player_id
+      name: FriendList
+      resource: Friend
+    - direction: tomany
+      fks:
+      - winner_id
+      name: GameResultList
+      resource: GameResult
+    - direction: tomany
+      fks:
+      - player_id
+      name: LeaderboardList
+      resource: Leaderboard
+    - direction: tomany
+      fks:
+      - player_id
+      name: ModeratorList
+      resource: Moderator
+    - direction: tomany
+      fks:
+      - player_id
+      name: MoveList
+      resource: Move
+    - direction: tomany
+      fks:
+      - player_id
+      name: NotificationList
+      resource: Notification
+    - direction: tomany
+      fks:
+      - player_id
+      name: PaymentList
+      resource: Payment
+    - direction: tomany
+      fks:
+      - player_id
+      name: PlayerAchievementList
+      resource: PlayerAchievement
+    - direction: tomany
+      fks:
+      - player_id
+      name: PlayerTeamList
+      resource: PlayerTeam
+    - direction: tomany
+      fks:
+      - player_id
+      name: PlayerTournamentList
+      resource: PlayerTournament
+    - direction: tomany
+      fks:
+      - reported_by_id
+      name: ReportList
+      resource: Report
+    - direction: tomany
+      fks:
+      - reported_player_id
+      name: reportedReportList
+      resource: Report
+    - direction: tomany
+      fks:
+      - player_id
+      name: RuleViolationList
+      resource: RuleViolation
+    type: Player
+  PlayerAchievement:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: achievement_id
+      template: integer
+      type: INTEGER
+    - name: player_id
+      template: integer
+      type: INTEGER
+    description: Connects players with their unlocked achievements.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Connects players with their unlocked achievements.
+    label: PlayerAchievement
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - achievement_id
+      name: achievement
+      resource: Achievement
+    - direction: toone
+      fks:
+      - player_id
+      name: player
+      resource: Player
+    type: PlayerAchievement
+  PlayerTeam:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: player_id
+      template: integer
+      type: INTEGER
+    - name: team_id
+      template: integer
+      type: INTEGER
+    description: Connects players with teams they are part of within team games.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Connects players with teams they are part of within team games.
+    label: PlayerTeam
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - player_id
+      name: player
+      resource: Player
+    - direction: toone
+      fks:
+      - team_id
+      name: team
+      resource: Team
+    type: PlayerTeam
+  PlayerTournament:
+    columns:
+    - label: ' tournament_id*'
+      name: tournament_id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: player_id
+      template: integer
+      type: INTEGER
+    - name: tournament_id
+      template: integer
+      type: INTEGER
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Connects players with tournaments they participate in.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: tournament_id
+    home_template: home_template.html
+    info_list: Connects players with tournaments they participate in.
+    label: PlayerTournament
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - player_id
+      name: player
+      resource: Player
+    - direction: toone
+      fks:
+      - tournament_id
+      name: tournament
+      resource: Tournament
+    type: PlayerTournament
+  Report:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: reported_by_id
+      template: integer
+      type: INTEGER
+    - name: reported_player_id
+      template: integer
+      type: INTEGER
+    - name: reason
+      template: text
+      type: VARCHAR
+    description: Represents reports made by players about other players.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Represents reports made by players about other players.
+    label: Report
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - reported_by_id
+      name: reported_by
+      resource: Player
+    - direction: toone
+      fks:
+      - reported_player_id
+      name: reported_player
+      resource: Player
+    type: Report
+  RuleViolation:
+    columns:
+    - label: ' description*'
+      name: description
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: player_id
+      template: integer
+      type: INTEGER
+    - name: id
+      template: integer
+      type: INTEGER
+    - name: date_reported
+      type: DATETIME
+    description: Describes instances where players have violated platform rules.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: description
+    home_template: home_template.html
+    info_list: Describes instances where players have violated platform rules.
+    label: RuleViolation
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - player_id
+      name: player
+      resource: Player
+    type: RuleViolation
+  Team:
+    columns:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents teams in collaborative chess games.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Represents teams in collaborative chess games.
+    label: Team
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - team_id
+      name: PlayerTeamList
+      resource: PlayerTeam
+    type: Team
+  Tournament:
+    columns:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: start_date
+      type: DATETIME
+    - name: end_date
+      type: DATETIME
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Information regarding chess tournaments.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Information regarding chess tournaments.
+    label: Tournament
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - tournament_id
+      name: PlayerTournamentList
+      resource: PlayerTournament
+    type: Tournament
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    edit_on_mode: dblclick
+    exclude_listpicker: false
+    include_translation: false
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    mode: tab
+    pick_style: list
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: false

@@ -1,0 +1,1014 @@
+<div class="container">
+<o-form-container breadcrumb="yes" breadcrumb-label-columns="username" breadcrumb-separator=", " class="fill-form">
+      <o-form #form attr="Player_form_edit" 
+        service="Player" 
+        entity="Player" 
+        fxLayout="column" 
+        show-header="yes" 
+        header-actions="R;I;U;D"
+        #oDetailForm keys="id" 
+        keys-sql-types="INTEGER" 
+        show-header-navigation="yes"
+        (onDataLoaded)="onDataLoaded($event)">
+
+  <o-row attr="row1" layout-align="start stretch">
+    <div fxLayout="row wrap" fxLayoutAlign="start start" fxFlex fxLayoutGap="14px">
+      
+      <o-text-input #username attr="username" label=" username*" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
+      
+      <o-text-input #email attr="email" label="email" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
+      
+      <o-integer-input #id attr="id" label="id" type="integer" editable="no" required="no" ></o-integer-input>
+      
+    </div>
+  </o-row>
+      
+      <mat-tab-group fxFill>
+        
+        <mat-tab label="BAN-player_id">
+    <div layout-padding>
+      <o-table 
+        attr="BanTable" 
+        service="Ban" 
+        entity="Ban" 
+        keys="id"
+        parent-keys="player_id:id"
+        columns="id;player_id;start_date;end_date"  
+        horizontal-scroll="yes"
+        detail-form-route="Ban" 
+        edit-form-route="Ban"
+        visible-columns="id;player_id;start_date;end_date"  
+        sort-columns="id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="player_id" title="player_id">
+    <o-table-cell-renderer-service attr="player_id" 
+        service="Player" entity="PlayerType" columns="id;username"
+        parent-keys="id:player_id"
+        value-column="username" keys="player_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-date-input #start_date attr="start_date" type="timestamp" label="start_date" editable="no" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+        
+          <o-date-input #end_date attr="end_date" type="timestamp" label="end_date" editable="no" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="BUGREPORT-player_id">
+    <div layout-padding>
+      <o-table 
+        attr="BugReportTable" 
+        service="BugReport" 
+        entity="BugReport" 
+        keys="id"
+        parent-keys="player_id:id"
+        columns="description;player_id;id"  
+        horizontal-scroll="yes"
+        detail-form-route="BugReport" 
+        edit-form-route="BugReport"
+        visible-columns="description;player_id;id"  
+        sort-columns="description" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #description attr="description" title=" description*" editable="no" required="no" content-align="left"></o-table-column>
+        
+          <o-table-column attr="player_id" title="player_id">
+    <o-table-cell-renderer-service attr="player_id" 
+        service="Player" entity="PlayerType" columns="id;username"
+        parent-keys="id:player_id"
+        value-column="username" keys="player_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column #id attr="id" title="id" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="CHAT-player_id">
+    <div layout-padding>
+      <o-table 
+        attr="ChatTable" 
+        service="Chat" 
+        entity="Chat" 
+        keys="id"
+        parent-keys="player_id:id"
+        columns="id;game_id;player_id;message;timestamp"  
+        horizontal-scroll="yes"
+        detail-form-route="Chat" 
+        edit-form-route="Chat"
+        visible-columns="id;game_id;player_id;message;timestamp"  
+        sort-columns="id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="game_id" title="game_id">
+    <o-table-cell-renderer-service attr="game_id" 
+        service="Game" entity="GameType" columns="id;id"
+        parent-keys="id:game_id"
+        value-column="id" keys="game_id"
+        visible-columns="id" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="player_id" title="player_id">
+    <o-table-cell-renderer-service attr="player_id" 
+        service="Player" entity="PlayerType" columns="id;username"
+        parent-keys="id:player_id"
+        value-column="username" keys="player_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column #message attr="message" title="message" editable="no" required="no" content-align="left"></o-table-column>
+        
+          <o-table-column #timestamp attr="timestamp" title="timestamp" editable="no" required="no" content-align="left"></o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="CLUBMEMBERSHIP-player_id">
+    <div layout-padding>
+      <o-table 
+        attr="ClubMembershipTable" 
+        service="ClubMembership" 
+        entity="ClubMembership" 
+        keys="id"
+        parent-keys="player_id:id"
+        columns="id;club_id;player_id"  
+        horizontal-scroll="yes"
+        detail-form-route="ClubMembership" 
+        edit-form-route="ClubMembership"
+        visible-columns="id;club_id;player_id"  
+        sort-columns="id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="club_id" title="club_id">
+    <o-table-cell-renderer-service attr="club_id" 
+        service="ChessClub" entity="ChessClubType" columns="id;name"
+        parent-keys="id:club_id"
+        value-column="name" keys="club_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="player_id" title="player_id">
+    <o-table-cell-renderer-service attr="player_id" 
+        service="Player" entity="PlayerType" columns="id;username"
+        parent-keys="id:player_id"
+        value-column="username" keys="player_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="ELORATING-player_id">
+    <div layout-padding>
+      <o-table 
+        attr="EloRatingTable" 
+        service="EloRating" 
+        entity="EloRating" 
+        keys="id"
+        parent-keys="player_id:id"
+        columns="id;player_id;rating"  
+        horizontal-scroll="yes"
+        detail-form-route="EloRating" 
+        edit-form-route="EloRating"
+        visible-columns="id;player_id;rating"  
+        sort-columns="id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="player_id" title="player_id">
+    <o-table-cell-renderer-service attr="player_id" 
+        service="Player" entity="PlayerType" columns="id;username"
+        parent-keys="id:player_id"
+        value-column="username" keys="player_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column #rating attr="rating" title="rating" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="FRIEND-friend_id">
+    <div layout-padding>
+      <o-table 
+        attr="FriendTable" 
+        service="Friend" 
+        entity="Friend" 
+        keys="id"
+        parent-keys="friend_id:id"
+        columns="id;friend_id;player_id"  
+        horizontal-scroll="yes"
+        detail-form-route="Friend" 
+        edit-form-route="Friend"
+        visible-columns="id;friend_id;player_id"  
+        sort-columns="id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="friend_id" title="friend_id">
+    <o-table-cell-renderer-service attr="friend_id" 
+        service="Player" entity="PlayerType" columns="id;username"
+        parent-keys="id:friend_id"
+        value-column="username" keys="friend_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="player_id" title="player_id">
+    <o-table-cell-renderer-service attr="player_id" 
+        service="Player" entity="PlayerType" columns="id;username"
+        parent-keys="id:player_id"
+        value-column="username" keys="player_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="FRIEND-player_id">
+    <div layout-padding>
+      <o-table 
+        attr="FriendTable" 
+        service="Friend" 
+        entity="Friend" 
+        keys="id"
+        parent-keys="player_id:id"
+        columns="id;friend_id;player_id"  
+        horizontal-scroll="yes"
+        detail-form-route="Friend" 
+        edit-form-route="Friend"
+        visible-columns="id;friend_id;player_id"  
+        sort-columns="id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="friend_id" title="friend_id">
+    <o-table-cell-renderer-service attr="friend_id" 
+        service="Player" entity="PlayerType" columns="id;username"
+        parent-keys="id:friend_id"
+        value-column="username" keys="friend_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="player_id" title="player_id">
+    <o-table-cell-renderer-service attr="player_id" 
+        service="Player" entity="PlayerType" columns="id;username"
+        parent-keys="id:player_id"
+        value-column="username" keys="player_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="GAMERESULT-winner_id">
+    <div layout-padding>
+      <o-table 
+        attr="GameResultTable" 
+        service="GameResult" 
+        entity="GameResult" 
+        keys="id"
+        parent-keys="winner_id:id"
+        columns="result_description;game_id;winner_id;id"  
+        horizontal-scroll="yes"
+        detail-form-route="GameResult" 
+        edit-form-route="GameResult"
+        visible-columns="result_description;game_id;winner_id;id"  
+        sort-columns="result_description" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #result_description attr="result_description" title=" result_description*" editable="no" required="no" content-align="left"></o-table-column>
+        
+          <o-table-column attr="game_id" title="game_id">
+    <o-table-cell-renderer-service attr="game_id" 
+        service="Game" entity="GameType" columns="id;id"
+        parent-keys="id:game_id"
+        value-column="id" keys="game_id"
+        visible-columns="id" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="winner_id" title="winner_id">
+    <o-table-cell-renderer-service attr="winner_id" 
+        service="Player" entity="PlayerType" columns="id;username"
+        parent-keys="id:winner_id"
+        value-column="username" keys="winner_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column #id attr="id" title="id" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="LEADERBOARD-player_id">
+    <div layout-padding>
+      <o-table 
+        attr="LeaderboardTable" 
+        service="Leaderboard" 
+        entity="Leaderboard" 
+        keys="id"
+        parent-keys="player_id:id"
+        columns="id;player_id;score"  
+        horizontal-scroll="yes"
+        detail-form-route="Leaderboard" 
+        edit-form-route="Leaderboard"
+        visible-columns="id;player_id;score"  
+        sort-columns="id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="player_id" title="player_id">
+    <o-table-cell-renderer-service attr="player_id" 
+        service="Player" entity="PlayerType" columns="id;username"
+        parent-keys="id:player_id"
+        value-column="username" keys="player_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column #score attr="score" title="score" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="MODERATOR-player_id">
+    <div layout-padding>
+      <o-table 
+        attr="ModeratorTable" 
+        service="Moderator" 
+        entity="Moderator" 
+        keys="id"
+        parent-keys="player_id:id"
+        columns="id;player_id;permissions"  
+        horizontal-scroll="yes"
+        detail-form-route="Moderator" 
+        edit-form-route="Moderator"
+        visible-columns="id;player_id;permissions"  
+        sort-columns="id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="player_id" title="player_id">
+    <o-table-cell-renderer-service attr="player_id" 
+        service="Player" entity="PlayerType" columns="id;username"
+        parent-keys="id:player_id"
+        value-column="username" keys="player_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column #permissions attr="permissions" title="permissions" editable="no" required="no" content-align="left"></o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="MOVE-player_id">
+    <div layout-padding>
+      <o-table 
+        attr="MoveTable" 
+        service="Move" 
+        entity="Move" 
+        keys="id"
+        parent-keys="player_id:id"
+        columns="id;game_id;player_id;move_notation;timestamp"  
+        horizontal-scroll="yes"
+        detail-form-route="Move" 
+        edit-form-route="Move"
+        visible-columns="id;game_id;player_id;move_notation;timestamp"  
+        sort-columns="id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="game_id" title="game_id">
+    <o-table-cell-renderer-service attr="game_id" 
+        service="Game" entity="GameType" columns="id;id"
+        parent-keys="id:game_id"
+        value-column="id" keys="game_id"
+        visible-columns="id" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="player_id" title="player_id">
+    <o-table-cell-renderer-service attr="player_id" 
+        service="Player" entity="PlayerType" columns="id;username"
+        parent-keys="id:player_id"
+        value-column="username" keys="player_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column #move_notation attr="move_notation" title="move_notation" editable="no" required="no" content-align="left"></o-table-column>
+        
+          <o-table-column #timestamp attr="timestamp" title="timestamp" editable="no" required="no" content-align="left"></o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="NOTIFICATION-player_id">
+    <div layout-padding>
+      <o-table 
+        attr="NotificationTable" 
+        service="Notification" 
+        entity="Notification" 
+        keys="id"
+        parent-keys="player_id:id"
+        columns="id;player_id;message;is_read"  
+        horizontal-scroll="yes"
+        detail-form-route="Notification" 
+        edit-form-route="Notification"
+        visible-columns="id;player_id;message;is_read"  
+        sort-columns="id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="player_id" title="player_id">
+    <o-table-cell-renderer-service attr="player_id" 
+        service="Player" entity="PlayerType" columns="id;username"
+        parent-keys="id:player_id"
+        value-column="username" keys="player_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column #message attr="message" title="message" editable="no" required="no" content-align="left"></o-table-column>
+        
+          <o-table-column #is_read attr="is_read" title="is_read" editable="no" required="no" content-align="left"></o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="PAYMENT-player_id">
+    <div layout-padding>
+      <o-table 
+        attr="PaymentTable" 
+        service="Payment" 
+        entity="Payment" 
+        keys="id"
+        parent-keys="player_id:id"
+        columns="id;player_id;amount;payment_date"  
+        horizontal-scroll="yes"
+        detail-form-route="Payment" 
+        edit-form-route="Payment"
+        visible-columns="id;player_id;amount;payment_date"  
+        sort-columns="id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="player_id" title="player_id">
+    <o-table-cell-renderer-service attr="player_id" 
+        service="Player" entity="PlayerType" columns="id;username"
+        parent-keys="id:player_id"
+        value-column="username" keys="player_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column #amount attr="amount" title="amount" type="currency" editable="no" required="no" currency-symbol="$" currency-symbol-position="left" thousand-separator=","decimal-separator="."></o-table-column>
+        
+          <o-date-input #payment_date attr="payment_date" type="timestamp" label="payment_date" editable="no" required="no" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="PLAYERACHIEVEMENT-player_id">
+    <div layout-padding>
+      <o-table 
+        attr="PlayerAchievementTable" 
+        service="PlayerAchievement" 
+        entity="PlayerAchievement" 
+        keys="id"
+        parent-keys="player_id:id"
+        columns="id;achievement_id;player_id"  
+        horizontal-scroll="yes"
+        detail-form-route="PlayerAchievement" 
+        edit-form-route="PlayerAchievement"
+        visible-columns="id;achievement_id;player_id"  
+        sort-columns="id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="achievement_id" title="achievement_id">
+    <o-table-cell-renderer-service attr="achievement_id" 
+        service="Achievement" entity="AchievementType" columns="id;name"
+        parent-keys="id:achievement_id"
+        value-column="name" keys="achievement_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="player_id" title="player_id">
+    <o-table-cell-renderer-service attr="player_id" 
+        service="Player" entity="PlayerType" columns="id;username"
+        parent-keys="id:player_id"
+        value-column="username" keys="player_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="PLAYERTEAM-player_id">
+    <div layout-padding>
+      <o-table 
+        attr="PlayerTeamTable" 
+        service="PlayerTeam" 
+        entity="PlayerTeam" 
+        keys="id"
+        parent-keys="player_id:id"
+        columns="id;player_id;team_id"  
+        horizontal-scroll="yes"
+        detail-form-route="PlayerTeam" 
+        edit-form-route="PlayerTeam"
+        visible-columns="id;player_id;team_id"  
+        sort-columns="id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="player_id" title="player_id">
+    <o-table-cell-renderer-service attr="player_id" 
+        service="Player" entity="PlayerType" columns="id;username"
+        parent-keys="id:player_id"
+        value-column="username" keys="player_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="team_id" title="team_id">
+    <o-table-cell-renderer-service attr="team_id" 
+        service="Team" entity="TeamType" columns="id;name"
+        parent-keys="id:team_id"
+        value-column="name" keys="team_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="PLAYERTOURNAMENT-player_id">
+    <div layout-padding>
+      <o-table 
+        attr="PlayerTournamentTable" 
+        service="PlayerTournament" 
+        entity="PlayerTournament" 
+        keys="id"
+        parent-keys="player_id:id"
+        columns="tournament_id;player_id;tournament_id;id"  
+        horizontal-scroll="yes"
+        detail-form-route="PlayerTournament" 
+        edit-form-route="PlayerTournament"
+        visible-columns="tournament_id;player_id;tournament_id;id"  
+        sort-columns="tournament_id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column attr="tournament_id" title="tournament_id">
+    <o-table-cell-renderer-service attr="tournament_id" 
+        service="Tournament" entity="TournamentType" columns="id;name"
+        parent-keys="id:tournament_id"
+        value-column="name" keys="tournament_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="player_id" title="player_id">
+    <o-table-cell-renderer-service attr="player_id" 
+        service="Player" entity="PlayerType" columns="id;username"
+        parent-keys="id:player_id"
+        value-column="username" keys="player_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="tournament_id" title="tournament_id">
+    <o-table-cell-renderer-service attr="tournament_id" 
+        service="Tournament" entity="TournamentType" columns="id;name"
+        parent-keys="id:tournament_id"
+        value-column="name" keys="tournament_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column #id attr="id" title="id" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="REPORT-reported_by_id">
+    <div layout-padding>
+      <o-table 
+        attr="ReportTable" 
+        service="Report" 
+        entity="Report" 
+        keys="id"
+        parent-keys="reported_by_id:id"
+        columns="id;reported_by_id;reported_player_id;reason"  
+        horizontal-scroll="yes"
+        detail-form-route="Report" 
+        edit-form-route="Report"
+        visible-columns="id;reported_by_id;reported_player_id;reason"  
+        sort-columns="id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="reported_by_id" title="reported_by_id">
+    <o-table-cell-renderer-service attr="reported_by_id" 
+        service="Player" entity="PlayerType" columns="id;username"
+        parent-keys="id:reported_by_id"
+        value-column="username" keys="reported_by_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="reported_player_id" title="reported_player_id">
+    <o-table-cell-renderer-service attr="reported_player_id" 
+        service="Player" entity="PlayerType" columns="id;username"
+        parent-keys="id:reported_player_id"
+        value-column="username" keys="reported_player_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column #reason attr="reason" title="reason" editable="no" required="no" content-align="left"></o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="REPORT-reported_player_id">
+    <div layout-padding>
+      <o-table 
+        attr="ReportTable" 
+        service="Report" 
+        entity="Report" 
+        keys="id"
+        parent-keys="reported_player_id:id"
+        columns="id;reported_by_id;reported_player_id;reason"  
+        horizontal-scroll="yes"
+        detail-form-route="Report" 
+        edit-form-route="Report"
+        visible-columns="id;reported_by_id;reported_player_id;reason"  
+        sort-columns="id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="reported_by_id" title="reported_by_id">
+    <o-table-cell-renderer-service attr="reported_by_id" 
+        service="Player" entity="PlayerType" columns="id;username"
+        parent-keys="id:reported_by_id"
+        value-column="username" keys="reported_by_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="reported_player_id" title="reported_player_id">
+    <o-table-cell-renderer-service attr="reported_player_id" 
+        service="Player" entity="PlayerType" columns="id;username"
+        parent-keys="id:reported_player_id"
+        value-column="username" keys="reported_player_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column #reason attr="reason" title="reason" editable="no" required="no" content-align="left"></o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="RULEVIOLATION-player_id">
+    <div layout-padding>
+      <o-table 
+        attr="RuleViolationTable" 
+        service="RuleViolation" 
+        entity="RuleViolation" 
+        keys="id"
+        parent-keys="player_id:id"
+        columns="description;player_id;id;date_reported"  
+        horizontal-scroll="yes"
+        detail-form-route="RuleViolation" 
+        edit-form-route="RuleViolation"
+        visible-columns="description;player_id;id;date_reported"  
+        sort-columns="description" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #description attr="description" title=" description*" editable="no" required="no" content-align="left"></o-table-column>
+        
+          <o-table-column attr="player_id" title="player_id">
+    <o-table-cell-renderer-service attr="player_id" 
+        service="Player" entity="PlayerType" columns="id;username"
+        parent-keys="id:player_id"
+        value-column="username" keys="player_id"
+        visible-columns="username" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column #id attr="id" title="id" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column #date_reported attr="date_reported" title="date_reported" editable="no" required="no" content-align="left"></o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+      </mat-tab-group>
+      
+    </o-form>
+  </o-form-container>
+</div>
